@@ -2,6 +2,17 @@ var messages = document.getElementById('messages');
 var sendButton = document.getElementById('send-btn');
 
 sendButton.addEventListener('click', sendUserMessage);
+
+start();
+
+function start() {
+    getMessageFromServer();
+    setInterval(getMessageFromServer, 2000)
+    
+}
+
+var lastMessages = [];
+
 getMessageFromServer();
 async function getMessageFromServer () {
 
@@ -9,23 +20,15 @@ async function getMessageFromServer () {
 
     response = await response.json();
 
+    var messagesHTML = fromMessagesHTML(response);
 
-    var allMessagesHTML = '';
-    for (var i=0; i < response.length; i++) {
-        var messageData = response [i];
-       var message = `
-        <div class="message">
-                <div class="nickname">${messageData.Name}</div>
-                <div class="message-text"> ${messageData.Message}</div>
-            </div>
-            `; 
-            allMessagesHTML = allMessagesHTML + message;
+    messages.innerHTML = allMessagesHTML; 
+           
+    if (lastMessages.length < response.length) {
+        scrollToEnd ();
     }
-    
 
-    
-
-            messages.innerHTML = allMessagesHTML; 
+    lastMessages = response;
 }
 async function sendUserMessage() {
     debugger;
@@ -48,4 +51,24 @@ async function sendUserMessage() {
     })
  });
  getMessageFromServer ();
+ scrollToEnd();
+}
+
+function fromMessagesHTML (messages) {
+    var allMessagesHTML = '';
+    for (var i=0; i < response.length; i++) {
+        var messageData = response [i];
+       var message = `
+        <div class="message">
+                <div class="nickname">${messageData.Name}</div>
+                <div class="message-text"> ${messageData.Message}</div>
+            </div>
+            `; 
+            allMessagesHTML = allMessagesHTML + message;
+    }
+    return allMessagesHTML;
+}
+
+function scrollToEnd() {
+   messages.scrollTop = messages.scrollHeight;
 }
