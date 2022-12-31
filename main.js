@@ -19,8 +19,31 @@ async function getMessageFromServer () {
             `; 
             allMessagesHTML = allMessagesHTML + message;
     }
+    
 
     
 
             messages.innerHTML = allMessagesHTML; 
+}
+async function sendUserMessage() {
+    debugger;
+    var userNickname = documen.getElementById('nickname-input').value;
+    var userMessage = documen.getElementById('message-input').value;
+
+    if(userNickname.length === 0) {
+        alert("Ти повинен ввести ім'я")
+        return;
+    }
+    if(userMessage.length === 0) {
+        alert("Ти повинен ввести повідомлення")
+        return;
+    }
+ await fetch ('https://fchatiavi.herokuapp.com/send/arick/', {
+    method:`post`,
+    body: JSON.stringify{
+        Name: userNickname,
+        Message: userMessage
+    }
+ });
+ getMessageFromServer ();
 }
