@@ -42,10 +42,10 @@ async function sendUserMessage() {
     }
  await fetch ('https://fchatiavi.herokuapp.com/send/arick/', {
     method:`post`,
-    body: JSON.stringify{
+    body: JSON.stringify({
         Name: userNickname,
         Message: userMessage
-    }
+    })
  });
  getMessageFromServer ();
 }
