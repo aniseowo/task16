@@ -20,6 +20,11 @@ async function getMessageFromServer () {
 
     response = await response.json();
 
+    if (response == null) {
+        return;
+        messages.innerHTML = 'no messages';
+    }
+
     var messagesHTML = fromMessagesHTML(response);
 
     messages.innerHTML = allMessagesHTML; 
