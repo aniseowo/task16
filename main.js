@@ -1,6 +1,8 @@
 var messages = document.getElementById('messages');
+var sendButton = document.getElementById('send-btn');
 
-window.onload = getMessageFromServer
+sendButton.addEventListener('click', sendUserMessage);
+getMessageFromServer();
 async function getMessageFromServer () {
 
     var response = await fetch ('https://fchatiavi.herokuapp.com/get/arick/?ofset=0&limit=10');
