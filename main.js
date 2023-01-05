@@ -1,4 +1,5 @@
 var messages = document.getElementById('messages');
+var roomNameInput = document.getElementById('roomname-input');
 var sendButton = document.getElementById('send-btn');
 
 sendButton.addEventListener('click', sendUserMessage);
@@ -15,8 +16,9 @@ var lastMessages = [];
 
 getMessageFromServer();
 async function getMessageFromServer () {
+    var roomname = roomNameInput.value;
 
-    var response = await fetch ('https://fchatiavi.herokuapp.com/get/arick/?ofset=0&limit=10');
+    var response = await fetch (`https://fchatiavi.herokuapp.com/get/${roomname}/?ofset=0&limit=10`);
 
     response = await response.json();
 
@@ -35,8 +37,9 @@ async function getMessageFromServer () {
 
     lastMessages = response;
 }
+
 async function sendUserMessage() {
-    debugger;
+    var roomname = roomNameInput.value;
     var userNickname = documen.getElementById('nickname-input').value;
     var userMessage = documen.getElementById('message-input').value;
 
@@ -48,7 +51,7 @@ async function sendUserMessage() {
         alert("Ти повинен ввести повідомлення")
         return;
     }
- await fetch ('https://fchatiavi.herokuapp.com/send/arick/', {
+ await fetch (`https://fchatiavi.herokuapp.com/send/${roomname}/`, {
     method:`post`,
     body: JSON.stringify({
         Name: userNickname,
@@ -66,7 +69,7 @@ function fromMessagesHTML (messages) {
        var message = `
         <div class="message">
                 <div class="nickname">${messageData.Name}</div>
-                <div class="message-text"> ${messageData.Message}</div>
+              <div class="message-text"> ${messageData.Message}</div>
             </div>
             `; 
             allMessagesHTML = allMessagesHTML + message;
