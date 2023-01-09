@@ -8,7 +8,7 @@ start();
 
 function start() {
     getMessageFromServer();
-    setInterval(getMessageFromServer, 2000)
+    setInterval(getMessageFromServer, 2000);
     
 }
 
@@ -23,11 +23,9 @@ async function getMessageFromServer () {
     response = await response.json();
 
     if (response == null) {
-        return;
         messages.innerHTML = 'no messages';
     }
 
-    var messagesHTML = fromMessagesHTML(response);
 
     messages.innerHTML = allMessagesHTML; 
            
@@ -62,7 +60,7 @@ async function sendUserMessage() {
  scrollToEnd();
 }
 
-function fromMessagesHTML (messages) {
+function fromMessagesHTML (_messages) {
     var allMessagesHTML = '';
     for (var i=0; i < response.length; i++) {
         var messageData = response [i];
